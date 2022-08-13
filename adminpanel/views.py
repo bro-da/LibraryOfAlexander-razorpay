@@ -21,7 +21,7 @@ from django.core.paginator import EmptyPage,PageNotAnInteger,Paginator
 
 # Create your views here.
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def user_accounts_table(request,id):
     if request.user.is_superadmin:
         active_users = Account.objects.all().filter(is_admin=False,is_active=True)
@@ -35,10 +35,10 @@ def user_accounts_table(request,id):
         else:
             return render(request,'adminpanel/admin_accounts/banned_users.html',context)
     else:
-        return redirect ('home')
+        return redirect ('index')
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def ban_user(request,id):
     if request.user.is_superadmin:
         user           = Account.objects.get(id=id)
@@ -46,10 +46,10 @@ def ban_user(request,id):
         user.save()
         return redirect('user_accounts_table',id=1)
     else:
-        return redirect ('home')
+        return redirect ('index')
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def unban_user(request,id):
     if request.user.is_superadmin:
         user           = Account.objects.get(id=id)
@@ -57,9 +57,9 @@ def unban_user(request,id):
         user.save()
         return redirect('user_accounts_table',id=2)
     else:
-        return redirect ('home')
+        return redirect ('index')
     
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def cart_table(request,id):
     if request.user.is_superadmin:
         carts = Cart.objects.all()
@@ -73,9 +73,9 @@ def cart_table(request,id):
         else:
             return render(request,'adminpanel/cart_table/cart_items.html',context)
     else:
-        return redirect ('home')
+        return redirect ('index')
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def category_table(request,id):
     if request.user.is_superadmin:
         
@@ -93,13 +93,13 @@ def category_table(request,id):
         else:
             return render(request,'adminpanel/category_table/sub_category.html',context)
     else:
-        return redirect ('home')
+        return redirect ('index')
 
 
 
 # category start
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def add_category(request):
     if request.user.is_superadmin:
         form = CategoryForm()
@@ -118,9 +118,9 @@ def add_category(request):
         }
         return render (request,'adminpanel/category_table/add_category.html',context)
     else:
-        return redirect('home')
+        return redirect('index')
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def edit_category(request,id):
     if request.user.is_superadmin:
         category = Category.objects.get(id=id)
@@ -141,17 +141,17 @@ def edit_category(request,id):
         }
         return render (request,'adminpanel/category_table/add_category.html',context)
     else:
-        return redirect('home')
+        return redirect('index')
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def delete_category(request,id):
     if request.user.is_superadmin:
         category = Category.objects.get(id=id)
         category.delete()
         return redirect ('category_table',id=2)
     else:
-        return redirect ('home')
+        return redirect ('index')
 
 # category end
 
@@ -166,7 +166,7 @@ def delete_category(request,id):
 
 
            
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def order_table(request,id):
     if request.user.is_superadmin:
         orders = Order.objects.filter(is_ordered=True,status='New')
@@ -195,10 +195,10 @@ def order_table(request,id):
         else:
             return render(request,'adminpanel/order_table/payments.html',context)
     else:
-        return redirect('home')
+        return redirect('index')
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def order_accepted(request,order_id):
     if request.user.is_superadmin:
         order = Order.objects.get(id=order_id)
@@ -206,10 +206,10 @@ def order_accepted(request,order_id):
         order.save()
         return redirect('order_table',id=1)
     else:
-        return redirect ('home')
+        return redirect ('index')
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def order_completed(request,order_id):
     if request.user.is_superadmin:
         order=Order.objects.get(id=order_id)
@@ -217,10 +217,10 @@ def order_completed(request,order_id):
         order.save()
         return redirect('order_table',id=2)
     else:
-        return redirect('home')
+        return redirect('index')
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def order_cancelled(request,order_id):
     if request.user.is_superadmin:
         order=Order.objects.get(id=order_id)
@@ -233,7 +233,7 @@ def order_cancelled(request,order_id):
 
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def store_table(request,id):
     if request.user.is_superadmin:
         products = Product.objects.all()
@@ -248,10 +248,10 @@ def store_table(request,id):
         else:
             return render(request,'adminpanel/store_table/variations.html',context)
     else:
-        return redirect('home')
+        return redirect('index')
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def add_product(request):
     if request.user.is_superadmin:
         form = ProductForm()
@@ -278,9 +278,9 @@ def add_product(request):
         }
         return render(request,'adminpanel/store_table/add_product.html',context)
     else:
-        return redirect('home')
+        return redirect('index')
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def edit_product(request,id):
     if request.user.is_superadmin:
         product = Product.objects.get(id=id)
@@ -312,20 +312,20 @@ def edit_product(request,id):
         }
         return render (request,'adminpanel/store_table/add_product.html',context)
     else:
-        return redirect ('home')
+        return redirect ('index')
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def delete_product(request,id):
     if request.user.is_superadmin:
         product = Product.objects.get(id=id)
         product.delete()
         return redirect('store_table',id=1)
     else:
-        return redirect ('home')
+        return redirect ('index')
 
 
-@login_required(login_url="login")     
+@login_required(login_url="loginpage")     
 def add_variations(request):
     if request.user.is_superadmin:
         form = VariationForm()
@@ -342,10 +342,10 @@ def add_variations(request):
         }
         return render(request,'adminpanel/store_table/add_variations.html',context)
     else:
-        return redirect('home')
+        return redirect('index')
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def edit_variations(request,id):
     if request.user.is_superadmin:
         variation = Variation.objects.get(id=id)
@@ -361,17 +361,17 @@ def edit_variations(request,id):
         }
         return render (request,'adminpanel/store_table/add_variations.html',context)
     else:
-        return redirect ('home')
+        return redirect ('index')
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def delete_variatons(request,id):
     if request.user.is_superadmin:
         variation = Variation.objects.get(id=id)
         variation.delete()
         return redirect('store_table',id=2)
     else:
-        return redirect ('home')
+        return redirect ('index')
 
 
 

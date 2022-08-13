@@ -31,7 +31,7 @@ def add_wishlist(request,product_id):
             product=product,
             wishlist = wishlist,
         )
-       
+    
     return redirect ('wishlist')
 
 def remove_wishlist_item(request,product_id,wishlist_item_id):

@@ -8,20 +8,11 @@
 
  <!--================Home Banner Area =================-->
   <!-- breadcrumb start-->
-  <section class="breadcrumb" style='background-color:#C9BBCF'>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="breadcrumb_iner">
-            <div class="breadcrumb_iner_item">
-              <h2>Favorites</h2>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <!-- breadcrumb start-->
+  <div class="bg0 m-t-40 p-b-140 p-t-40">
+		<div class="container">
+			<div class="flex-w flex-sb-m p-b-52">
+				<div class="flex-w flex-l-m filter-tope-group m-tb-10">
+
 
   {% if not wishlist_items %}
   <br>
@@ -95,11 +86,15 @@
         </div>
       </div>
   </section>
+ 
   <!--================End Cart Area =================-->
   {% endif %}
-
+</div>
+</div>
+</div>
+</div>
   {% include 'layouts/loader.html' %}
-</html>
+
 {% endblock %}
-</body>
+
 
