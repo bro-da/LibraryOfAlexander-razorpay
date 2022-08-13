@@ -3,7 +3,7 @@
 
 
 # Create your models here.
-from accounts.models import Category
+from category.models import Category
 from django.urls import reverse
 from django.db import models
 from django.forms import SlugField
@@ -32,6 +32,9 @@ class Product(models.Model):
 
     def get_urls(self):
         return reverse('product_detail',args=[self.category.slug,self.slug])
+
+    def get_products(self):
+     return self.objects.filter(categories__title=self.category.title)
 
 class VariationManager(models.Manager):
     def booktype(self):

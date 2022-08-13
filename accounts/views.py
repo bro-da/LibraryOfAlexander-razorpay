@@ -22,9 +22,11 @@ def index(request):
     categories=Category.objects.all()
    
     Products=None
+    cproduct=Product.objects.filter(category__slug='childrens')
     context={
         'products':products,
         'categories':categories,
+        'cproducts':cproduct,
     }
     return render(request,'base/index.html',context)
 

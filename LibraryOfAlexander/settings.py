@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'carts',
     'orders',
     'wishlist',
+    'category',
 ]
 
 MIDDLEWARE = [
@@ -85,7 +86,7 @@ AUTH_USER_MODEL='accounts.Account'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'myproject',
+        'NAME': 'myproject1',
         'USER': 'myprojectuser',
         'PASSWORD': 'password',
         'HOST': 'localhost',

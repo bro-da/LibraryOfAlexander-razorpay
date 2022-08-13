@@ -8,7 +8,7 @@
 
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import Account, Category
+from .models import Account
 
 
 # Register your models here.
@@ -21,10 +21,7 @@ class AccountAdmin(UserAdmin):
     list_filter = ()
     fieldsets = ()
 
-class CategoryAdmin(admin.ModelAdmin):
-    prepopulated_fields= {'slug': ('category_name',)}
-    list_display=('category_name','slug')
+
 
 admin.site.register(Account,AccountAdmin)
 
-admin.site.register(Category,CategoryAdmin)
