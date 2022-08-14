@@ -106,7 +106,7 @@ def logoutUser(request):
 
 
 
-
+@login_required(login_url='loginpage')
 def userdash(request):
     orders = Order.objects.order_by('-created_at').filter(user_id=request.user.id, is_ordered=True, status = 'New')
     orders_count = orders.count()
