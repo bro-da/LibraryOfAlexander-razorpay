@@ -37,19 +37,19 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapse11"
+        <a class="nav-link collapsed" href="{% url 'index' %}" data-toggle="collapse" data-target="#collapse11"
             aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-cog"></i>
             <span>Home</span>
         </a>
-        <div id="collapse11" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <!-- <div id="collapse11" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Select category:</h6>
                 <a class="collapse-item" href="{# url 'home_table' 1#}">Carousel</a>
                 <a class="collapse-item" href="{# url 'home_table' 2#}">Awesomes</a>
                 <a class="collapse-item" href="{# url 'home_table' 3#}">Best Sellers</a>
             </div>
-        </div>
+        </div> -->
     </li>
 
     <!-- Nav Item - Pages Collapse Menu       for Accounts-->      
@@ -81,9 +81,9 @@
         <div id="collapse3" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Select category:</h6>
-                <a class="collapse-item" href="{% url 'category_table' 1%}">Main Category</a>
+                
                 <a class="collapse-item" href="{% url 'category_table' 2%}">Category</a>
-                <a class="collapse-item" href="{% url 'category_table' 3%}">Sub Category</a>
+                
 
                 
 
