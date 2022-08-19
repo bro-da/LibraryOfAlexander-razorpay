@@ -6,8 +6,58 @@
     <div class="container mt-5 pt-5">
         
         <div class="row">
-             <!-- user sidebar -->
-          {% include "layouts/usersidebar.html" %}
+            <div class="col-lg-3 my-lg-0 my-md-1">
+                <div id="sidebar" class="bg-purple">
+                    <div class="h4 text-dark">Account</div>
+                    <ul>
+                        <li class="active">
+                            <a href="#" class="text-decoration-none d-flex align-items-start">
+                                <div class="fas fa-box pt-2 me-3"></div>
+                                <div class="d-flex flex-column">
+                                    <div class="link">My Account</div>
+                                    <div class="link-desc">View & Manage orders and returns</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li >
+                            <a href="/orders" class="text-decoration-none d-flex align-items-start">
+                                <div class="fas fa-box-open pt-2 me-3"></div>
+                                <div class="d-flex flex-column">
+                                    <div class="link">My Orders</div>
+                                    <div class="link-desc">View & Manage orders and returns</div>
+                                </div>
+                            </a>
+                        </li>
+                        <!-- <li>
+                            <a href="/user-address" class="text-decoration-none d-flex align-items-start">
+                                <div class="far fa-address-book pt-2 me-3"></div>
+                                <div class="d-flex flex-column">
+                                    <div class="link">Address Book</div>
+                                    <div class="link-desc">View & Manage Addresses</div>
+                                </div>
+                            </a>
+                        </li> -->
+                        <li>
+                            <a href="#" class="text-decoration-none d-flex align-items-start">
+                                <div class="far fa-user pt-2 me-3"></div>
+                                <div class="d-flex flex-column">
+                                    <div class="link">My Profile</div>
+                                    <div class="link-desc">Change your profile details & password</div>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="text-decoration-none d-flex align-items-start">
+                                <div class="fas fa-headset pt-2 me-3"></div>
+                                <div class="d-flex flex-column">
+                                    <div class="link">Help & Support</div>
+                                    <div class="link-desc">Contact Us for help and support</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div class="col-lg-9 my-lg-0 my-1">
                 <div id="main-content" class="bg-white border">
                     <div class="d-flex flex-column">
@@ -29,7 +79,7 @@
                                 alt="">
                             <div class="d-flex align-items-center mt-2">
                                 <div class="tag">Items in Cart</div>
-                                <div class="ms-auto number">{{cart_Count}}</div>
+                                <div class="ms-auto number">{{cartCount}}</div>
                             </div>
                         </div>
                       
@@ -37,74 +87,73 @@
                     <div class="text-uppercase">edit profile</div>
                     
                     <div class="order my-3 bg-light">
-                         <style>
-                            .img {
-                                border-radius: 8px;
-                            }
-                        </style> 
-                        
-                        <div style="margin-top: 8em;">
-                            <div class="container mt-5">
-                                <div class="row">
-                                   
-                                    <!-- Profile Settings-->
-                                    <div class="col-lg-8 pb-5">
-                                        <form action="{% url 'editprofile' %}" method="POST" enctype="multipart/form-data">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="account-fn">Full Name</label>
-                                                    <input class="form-control" name="{{user_form.first_name}}" type="text" id="account-fn" value=""
-                                                        required="">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="account-ln">Last Name</label>
-                                                    <input class="form-control" type="text" id="account-ln" value="Adams" required="" name="{{user_form.last_name}}">
-                                                </div>
-                                            </div> 
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="account-email">E-mail Address</label>
-                                                    <input class="form-control" name="email" type="email" id="account-email" name="{{user_form.email}}"
-                                                        value="">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="account-phone">Phone Number</label>
-                                                    <input class="form-control" name="mobile" type="text" id="account-phone"
-                                                        value="{{user_form.mobile}}" required="">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="account-pass">New Password</label>
-                                                    <input class="form-control" name="password" type="password" id="account-pass" name="{{user_form.first_name}}">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="account-confirm-pass">Confirm Password</label>
-                                                    <input class="form-control" name="c_password" type="password" id="account-confirm-pass">
-                                                </div>
-                                            </div>
-                                            
-                                                                          <div class="col-12">
-                                                <hr class="mt-2 mb-3">
-                                                <div class="d-flex flex-wrap justify-content-between align-items-center">
-                                                   
-                                                    <button class="btn btn-style-1 btn-primary" type="submit" data-toast=""
-                                                        data-toast-position="topRight" data-toast-type="success"
-                                                        data-toast-icon="fe-icon-check-circle" data-toast-title="Success!"
-                                                        data-toast-message="Your profile updated successfuly.">Update Profile</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                        <div class="card-body">
+                            <div class="row"> 
+                                {% comment %} form stating and csrftoken {% endcomment %}
+                                <form action="{% url 'editprofile' %}" method="POST">
+                               
+                                    
+                                    <div class="form-outline mb-4">
+                                        <label class="form-label" for="form3Example1cg">first_name</label>
+                                        <input type="text" name="email" id="form3Example1cg" class="form-control form-control-lg" placeholder="enter email"/>
+                                       
+                                    </div> 
                                 </div>
-                            </div>
+                               </div>
+                                  
+                            </form>
+                            </div> <!-- row.// -->
                         </div>
+                        <!-- <div class="row">
+                            <div class="col-lg-4">
+                                <div class="d-flex flex-column justify-content-between order-summary">
+                                    <div class="d-flex align-items-center ">
+                                        <div class="text-uppercase">ORDER-</div>
+                                        <div class="blue-label  text-uppercase ml-3"></div>
+                                    </div>
+                                    <div class="fs-8"></div>
+                                    <div class="fs-8">{{this.date}}</div>
+                                   <div class="rating d-flex align-items-center pt-1">
+                                        <img src="https://www.freepnglogos.com/uploads/like-png/like-png-hand-thumb-sign-vector-graphic-pixabay-39.png"
+                                            alt=""><span class="px-2">Rating:</span>
+                                        <span class="fas fa-star"></span>
+                                        <span class="fas fa-star"></span>
+                                        <span class="fas fa-star"></span>
+                                        <span class="fas fa-star"></span>
+                                        <span class="far fa-star"></span>
+                                    </div> 
+                            </div>
+                            <div class="col-lg-8">
+                                <div class="d-sm-flex align-items-sm-start justify-content-sm-between">
+                                    <div class="status ml-5">Status : {{this.status}}</div>
+                                    <div class="btn btn-primary text-uppercase">order info</div>
+                                </div>
+                 
+                                <div class="progressbar-track">
+                                    <ul class="progressbar">
+                                        <li id="step-1" class="text-muted green">
+                                            <span class="fas fa-gift"></span>
+                                        </li>
+                                        <li id="step-2" class="text-muted ">
+                                            <span class="fas fa-check"></span>
+                                        </li>
+                                        <li id="step-3" class="text-muted ">
+                                            <span class="fas fa-box"></span>
+                                        </li>
+                                        <li id="step-4" class="text-muted ">
+                                            <span class="fas fa-truck"></span>
+                                        </li>
+                                        <li id="step-5" class="text-muted ">
+                                            <span class="fas fa-box-open"></span>
+                                        </li>
+                                    </ul>
+                                    <div id="tracker"></div>
+                                </div>
+                            
+                                
+                            </div>
+                        </div> -->
+                        
                     </div>
                     
                    
@@ -114,186 +163,307 @@
         </div>
 
     </div>
-<style>
-body{
-    background:#eee;    
-}
-.widget-author {
-  margin-bottom: 58px;
-}
-.author-card {
-  position: relative;
-  padding-bottom: 48px;
-  background-color: #fff;
-  box-shadow: 0 12px 20px 1px rgba(64, 64, 64, .09);
-}
-.author-card .author-card-cover {
-  position: relative;
-  width: 100%;
-  height: 100px;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-.author-card .author-card-cover::after {
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  content: '';
-  opacity: 0.5;
-}
-.author-card .author-card-cover > .btn {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 0 10px;
-}
-.author-card .author-card-profile {
-  display: table;
-  position: relative;
-  margin-top: -22px;
-  padding-right: 15px;
-  padding-bottom: 16px;
-  padding-left: 20px;
-  z-index: 5;
-}
-.author-card .author-card-profile .author-card-avatar, .author-card .author-card-profile .author-card-details {
-  display: table-cell;
-  vertical-align: middle;
-}
-.author-card .author-card-profile .author-card-avatar {
-  width: 85px;
-  border-radius: 50%;
-  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, .15);
-  overflow: hidden;
-}
-.author-card .author-card-profile .author-card-avatar > img {
-  display: block;
-  width: 100%;
-}
-.author-card .author-card-profile .author-card-details {
-  padding-top: 20px;
-  padding-left: 15px;
-}
-.author-card .author-card-profile .author-card-name {
-  margin-bottom: 2px;
-  font-size: 14px;
-  font-weight: bold;
-}
-.author-card .author-card-profile .author-card-position {
-  display: block;
-  color: #8c8c8c;
-  font-size: 12px;
-  font-weight: 600;
-}
-.author-card .author-card-info {
-  margin-bottom: 0;
-  padding: 0 25px;
-  font-size: 13px;
-}
-.author-card .author-card-social-bar-wrap {
-  position: absolute;
-  bottom: -18px;
-  left: 0;
-  width: 100%;
-}
-.author-card .author-card-social-bar-wrap .author-card-social-bar {
-  display: table;
-  margin: auto;
-  background-color: #fff;
-  box-shadow: 0 12px 20px 1px rgba(64, 64, 64, .11);
-}
-.btn-style-1.btn-white {
-    background-color: #fff;
-}
-.list-group-item i {
-    display: inline-block;
-    margin-top: -1px;
-    margin-right: 8px;
-    font-size: 1.2em;
-    vertical-align: middle;
-}
-.mr-1, .mx-1 {
-    margin-right: .25rem !important;
+
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;900&display=swap');
+
+/* Resetting */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
-.list-group-item.active:not(.disabled) {
-    border-color: #e7e7e7;
-    background: #fff;
-    color: #ac32e4;
-    cursor: default;
-    pointer-events: none;
-}
-.list-group-flush:last-child .list-group-item:last-child {
-    border-bottom: 0;
+#sidebar {
+    padding: 15px 0px 15px 0px;
+    border-radius: 10px;
 }
 
-.list-group-flush .list-group-item {
-    border-right: 0 !important;
-    border-left: 0 !important;
+#sidebar .h4 {
+    font-weight: 500;
+    padding-left: 15px;
 }
 
-.list-group-flush .list-group-item {
-    border-right: 0;
-    border-left: 0;
-    border-radius: 0;
+#sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding-left: 0rem;
 }
-.list-group-item.active {
-    z-index: 2;
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+
+#sidebar ul li {
+    padding: 10px 0;
+    display: block;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border-left: 5px solid transparent;
 }
-.list-group-item:last-child {
+
+#sidebar ul li.active {
+    
+    background-color: #1da8f3;
+}
+
+#sidebar ul li a {
+    display: block;
+}
+
+#sidebar ul li a .fas,
+#sidebar ul li a .far {
+    color: rgb(20, 17, 17);
+}
+
+#sidebar ul li a .link {
+    color: rgb(45, 41, 41);
+    font-weight: 500;
+}
+
+#sidebar ul li a .link-desc {
+    font-size: 0.8rem;
+    color: rgb(53, 51, 51);
+}
+
+#main-content {
+    padding: 30px;
+    border-radius: 15px;
+}
+
+#main-content .h5,
+#main-content .text-uppercase {
+    font-weight: 600;
     margin-bottom: 0;
-    border-bottom-right-radius: .25rem;
-    border-bottom-left-radius: .25rem;
-}
-a.list-group-item, .list-group-item-action {
-    color: #404040;
-    font-weight: 600;
-}
-.list-group-item {
-    padding-top: 16px;
-    padding-bottom: 16px;
-    -webkit-transition: all .3s;
-    transition: all .3s;
-    border: 1px solid #e7e7e7 !important;
-    border-radius: 0 !important;
-    color: #404040;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: .08em;
-    text-transform: uppercase;
-    text-decoration: none;
-}
-.list-group-item {
-    position: relative;
-    display: block;
-    padding: .75rem 1.25rem;
-    margin-bottom: -1px;
-    background-color: #fff;
-    border: 1px solid rgba(0,0,0,0.125);
-}
-.list-group-item.active:not(.disabled)::before {
-    background-color: #ac32e4;
 }
 
-.list-group-item::before {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 3px;
+#main-content .h5+div {
+    font-size: 0.9rem;
+}
+
+#main-content .box {
+    padding: 10px;
+    border-radius: 6px;
+    width: 170px;
+    height: 90px;
+}
+
+#main-content .box img {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+}
+
+#main-content .box .tag {
+    font-size: 0.9rem;
+    color: #000;
+    font-weight: 500;
+}
+
+#main-content .box .number {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.order {
+    padding: 10px 30px;
+    min-height: 150px;
+}
+
+.order .order-summary {
     height: 100%;
-    background-color: transparent;
-    content: '';
 }
 
-</style>
-{% include 'layouts/userstyle.html' %}
+.order .blue-label {
+    background-color: #aeaeeb;
+    color: #1da8f3;
+    font-size: 0.9rem;
+    padding: 0px 3px;
+}
+
+.order .green-label {
+    background-color: #a8e9d0;
+    color: #008357;
+    font-size: 0.9rem;
+    padding: 0px 3px;
+}
+
+.order .fs-8 {
+    font-size: 0.85rem;
+}
+
+.order .rating img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.order .rating .fas,
+.order .rating .far {
+    font-size: 0.9rem;
+}
+
+.order .rating .fas {
+    color: #daa520;
+}
+    
+.order .status {
+    font-weight: 600;
+}
+
+.order .btn.btn-primary {
+    background-color: #fff;
+    color: #1da8f3;
+    border: 1px solid #1da8f3;
+}
+
+.order .btn.btn-primary:hover {
+    background-color: #1da8f3;
+    color: #fff;
+}
+
+.order .progressbar-track {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.order .progressbar-track .progressbar {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 0rem;
+}
+
+.order .progressbar-track .progressbar li {
+    font-size: 1.5rem;
+    border: 1px solid #333;
+    padding: 5px 10px;
+    border-radius: 50%;
+    background-color: #dddddd;
+    z-index: 100;
+    position: relative;
+}
+
+.order .progressbar-track .progressbar li.green {
+    border: 1px solid #007965;
+    background-color: #d5e6e2;
+}
+
+.order .progressbar-track .progressbar li::after {
+    position: absolute;
+    font-size: 0.9rem;
+    top: 50px;
+    left: 0px;
+}
+
+#tracker {
+    position: absolute;
+    border-top: 1px solid #bbb;
+    width: 100%;
+    top: 25px;
+}
+
+#step-1::after {
+    content: 'Placed';
+}
+
+#step-2::after {
+    content: 'Accepted';
+    left: -10px;
+}
+
+#step-3::after {
+    content: 'Packed';
+}
+
+#step-4::after {
+    content: 'Shipped';
+}
+
+#step-5::after {
+    content: 'Delivered';
+    left: -10px;
+}
+
+
+
+/* Backgrounds */
+.bg-purple {
+    background-color: #f0ecec;
+}
+
+.bg-light {
+    background-color: #f0ecec !important;
+}
+
+.green {
+    color: #007965 !important;
+}
+
+/* Media Queries */
+@media(max-width: 1199.5px) {
+    nav ul li {
+        padding: 0 10px;
+    }
+}
+
+@media(max-width: 500px) {
+    .order .progressbar-track .progressbar li {
+        font-size: 1rem;
+    }
+
+    .order .progressbar-track .progressbar li::after {
+        font-size: 0.8rem;
+        top: 35px;
+    }
+
+    #tracker {
+        top: 20px;
+    }
+}
+
+@media(max-width: 440px) {
+    #main-content {
+        padding: 20px;
+    }
+
+    .order {
+        padding: 20px;
+    }
+
+    #step-4::after {
+        left: -5px;
+    }
+}
+
+@media(max-width: 395px) {
+    .order .progressbar-track .progressbar li {
+        font-size: 0.8rem;
+    }
+
+    .order .progressbar-track .progressbar li::after {
+        font-size: 0.7rem;
+        top: 35px;
+    }
+
+    #tracker {
+        top: 15px;
+    }
+
+    .order .btn.btn-primary {
+        font-size: 0.85rem;
+    }
+}
+
+@media(max-width: 355px) {
+    #main-content {
+        padding: 15px;
+    }
+
+    .order {
+        padding: 10px;
+    }
+}
+    </style>
 {% include 'layouts/loader.html' %}
 {% endblock %}

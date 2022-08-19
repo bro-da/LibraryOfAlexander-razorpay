@@ -391,7 +391,7 @@ def delete_variatons(request,id):
 
 
 
-@login_required(login_url="loginpage")
+@login_required(login_url="login")
 def adminpanel(request):
     if request.user.is_superadmin:
         total_revenue = round( Order.objects.filter(is_ordered = True).aggregate(sum = Sum('order_total'))['sum'])
@@ -428,7 +428,7 @@ def adminpanel(request):
         }
         return render (request,'adminpanel/adminpanel.html',context)
     else:
-        return redirect('index')
+        return redirect('home')
 
 
 def admin_search(request):
@@ -469,7 +469,7 @@ def admin_search(request):
 
 
 # variation
-@login_required(login_url="loginpage")     
+@login_required(login_url="login")     
 def add_variations(request):
     if request.user.is_superadmin:
         form = VariationForm()
@@ -489,7 +489,7 @@ def add_variations(request):
         return redirect('home')
 
 
-@login_required(login_url="loginpage")
+@login_required(login_url="login")
 def edit_variations(request,id):
     if request.user.is_superadmin:
         variation = Variation.objects.get(id=id)
@@ -508,7 +508,7 @@ def edit_variations(request,id):
         return redirect ('home')
 
 
-@login_required(login_url="loginpage")
+@login_required(login_url="login")
 def delete_variatons(request,id):
     if request.user.is_superadmin:
         variation = Variation.objects.get(id=id)

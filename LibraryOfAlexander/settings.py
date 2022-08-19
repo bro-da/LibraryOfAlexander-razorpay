@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('secret')
+SECRET_KEY = 'django-insecure-tn!zacqav1oi8cn=l5%wm2y6di7c#hf_6_osqx@^x-f=2_(0jd'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG',cast=bool)
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'orders',
     'wishlist',
     'category',
-    
 ]
 
 MIDDLEWARE = [
@@ -145,18 +144,7 @@ MEDIA_ROOT=BASE_DIR/'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# email settttings
-EMAIL_HOST=config('EMAIL_HOST')
-EMAIL_PORT=config('EMAIL_PORT',cast=int)
-EMAIL_HOST_USER=config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS=config('EMAIL_USE_TLS',cast=bool)
-
-# razorpay settings
-razor_pay_key_id=config('razor_pay_key_id')
-secret_key=config('secret_key')
 
 
-#twilio
-ACCOUNT_SID=config('ACCOUNT_SID')
-AUTH_TOKEN=config('AUTH_TOKEN')
+razor_pay_key_id='rzp_live_bATDZlQv8Gbo1d'
+secret_key='WLltAgzkBxOhL0ttOsmVWpRP'

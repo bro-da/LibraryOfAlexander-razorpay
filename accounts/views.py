@@ -16,13 +16,6 @@ from django.contrib.auth.decorators import login_required
 from carts.models import Cart, Cartitem
 from carts.views import _cart_id
 from orders.models import OrderProduct
-from django.contrib.auth.tokens import default_token_generator
-from django.core.mail import EmailMessage
-from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
-from base64 import urlsafe_b64decode, urlsafe_b64encode
-from django.utils.encoding import force_bytes
-
 
 def index(request):
     products=Product.objects.all().filter(is_available=True)
@@ -83,7 +76,6 @@ def loginpage(request):
 
 
 
-
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -97,52 +89,14 @@ def register(request):
             user= Account.objects.create_user(first_name=first_name, last_name=last_name, email=email,username=username, password=password)
             user.phone_number=phone_number
             user.save()
-            
-            #USER ACTIVATION
-
-            current_site = get_current_site(request)
-            mail_subject = 'Please active your account'
-            message = render_to_string('account_verification_email.html',{
-                'user' : user,
-                'domain' : current_site,
-                
-                
-            })
-            to_email=email
-            send_email=EmailMessage(mail_subject,message,to=[to_email])
-            send_email.send() 
-            
-            request.session['phone_number']=phone_number
             messages.success(request,'Registration successful')
-            return redirect('accounts/loginpage')
+            return redirect('register')
     else:
         form = RegistrationForm()
     context = {
         'form': form,
     }
     return render(request,'accounts/register.html',context)
-
-# def register(request):
-#     if request.method == 'POST':
-#         form = RegistrationForm(request.POST)
-#         if form.is_valid():
-#             first_name = form.cleaned_data['first_name']
-#             last_name  = form.cleaned_data['last_name']
-#             phone_number  = form.cleaned_data['phone_number']
-#             email  = form.cleaned_data['email']
-#             password  = form.cleaned_data['password']
-#             username=email.split("@")[0]
-#             user= Account.objects.create_user(first_name=first_name, last_name=last_name, email=email,username=username, password=password)
-#             user.phone_number=phone_number
-#             user.save()
-#             messages.success(request,'Registration successful')
-#             return redirect('register')
-#     else:
-#         form = RegistrationForm()
-#     context = {
-#         'form': form,
-#     }
-#     return render(request,'accounts/register.html',context)
 
 
 @login_required(login_url='loginpage')
@@ -158,13 +112,11 @@ def userdash(request):
     orders_count = orders.count()
     UserProfile.objects.get_or_create(user=request.user)
     userprofile = UserProfile.objects.get(user_id=request.user.id)
-    # order_item=OrderProduct.objects.get(id=request.POST['Product_name'])
+
     context = {
         'orders_count':orders_count,
         'userprofile' : userprofile,
         'orders' : orders,
-        
-        
     }
     return render(request, 'accounts/userdash.html', context)
 
@@ -203,33 +155,6 @@ def order_detail(request, order_id):
         'subtotal' : subtotal,
     }
     return render(request, 'accounts/order_detail.html', context)
-
-
-
-
-
-def cancel_order(request,order_id):
-    order = Order.objects.get(id=order_id)
-    order.status = 'Cancelled'
-    order.save()
-
-    # mail_subject = 'Hey There!. Your order has been cancelled!'
-    # mail_subject = 'Order Cancelled'
-    # message = render_to_string('orders/order_cancelled_email.html',{
-    #     'user':request.user,
-    #     # 'order':order,
-    #     # 'domain':current_site,
-    #     # 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
-    #     # 'token':default_token_generator.make_token(user)
-    # })
-    # to_email = request.user.email
-    # print(to_email)
-    # send_email = EmailMessage(mail_subject, message, to=[to_email])
-    # send_email.send()
-
-    messages.success(request, 'Cancellation email has been sent to your email address')
-    return render(request,'accounts/userdash.html')
-    
 
 
 
