@@ -17,6 +17,7 @@ import datetime
 from django.db.models import Q
 
 from django.core.paginator import EmptyPage,PageNotAnInteger,Paginator
+from django.http import HttpResponse
 
 
 # Create your views here.
@@ -391,40 +392,41 @@ def delete_variatons(request,id):
 
 
 
-@login_required(login_url="login")
+@login_required(login_url="loginpage")
 def adminpanel(request):
+    
     if request.user.is_superadmin:
-        total_revenue = round( Order.objects.filter(is_ordered = True).aggregate(sum = Sum('order_total'))['sum'])
+        # total_revenue = round( Order.objects.filter(is_ordered = True).aggregate(sum = Sum('order_total'))['sum'])
 
 
-        total_cost= round((total_revenue * .80))
-        total_profit = round(total_revenue - total_cost)  
-        chart_year = datetime.date.today().year
-        chart_month = datetime.date.today().month
+        # total_cost= round((total_revenue * .80))
+        # total_profit = round(total_revenue - total_cost)  
+        # chart_year = datetime.date.today().year
+        # chart_month = datetime.date.today().month
 
-        #getting daily revenue
-        daily_revenue = Order.objects.filter(                     
-            created_at__year=chart_year,created_at__month=chart_month
-        ).order_by('created_at').annotate(day=TruncMinute('created_at')).values('day').annotate(sum=Sum('order_total')).values('day','sum')
+        # #getting daily revenue
+        # daily_revenue = Order.objects.filter(                     
+        #     created_at__year=chart_year,created_at__month=chart_month
+        # ).order_by('created_at').annotate(day=TruncMinute('created_at')).values('day').annotate(sum=Sum('order_total')).values('day','sum')
 
-        day=[]
-        revenue=[]
-        for i in daily_revenue:
-            day.append(i['day'].minute)
-            revenue.append(int(i['sum']))
+        # day=[]
+        # revenue=[]
+        # for i in daily_revenue:
+        #     day.append(i['day'].minute)
+        #     revenue.append(int(i['sum']))
 
        
         product_count = OrderProduct.objects.all().count()
 
        
         context = {
-            'total_revenue' : total_revenue,
-            'total_cost' : total_cost,
-            'total_profit' : total_profit,
+            # 'total_revenue' : total_revenue,
+            # 'total_cost' : total_cost,
+            # 'total_profit' : total_profit,
            
             'product_count' : product_count,
-            'day' : day,
-            'revenue' : revenue,
+            # 'day' : day,
+            # 'revenue' : revenue,
         }
         return render (request,'adminpanel/adminpanel.html',context)
     else:
@@ -516,3 +518,40 @@ def delete_variatons(request,id):
         return redirect('store_table',id=2)
     else:
         return redirect ('home')
+
+
+def vendor_approve(request,id):
+    if request.user.is_admin:
+        user = Account.objects.get(pk=id)
+
+        # email = user.email
+    
+        # #Approval email
+        # current_site = get_current_site(request)
+        # mail_subject = 'Bitstore vendor request'
+        # message = render_to_string('admin_panel/vendor_accept_email.html',{
+        #     'user':user,
+        #     'domain':current_site,
+        # })  
+        # to_email = email
+        # sent_email = EmailMessage(mail_subject,message,to=[to_email])
+        # sent_email.send()
+        # messages.info(request,'Approval email has been sent to '+email+'.')
+
+        user.is_staff = True
+        user.vendor_req_status = False
+        user.vendor_req_rejection_status = False
+        user.save()
+        return redirect('vendor_requests')
+    else:
+        return redirect('loginpage')
+
+def vendor_requests(request):
+    if request.user.is_admin:
+        # context = {
+        #     'vendor_req':Account.objects.all().filter(vendor_req_status=True),
+        #     'vendor_req_rejected':Account.objects.all().filter(vendor_req_status=False,vendor_req_rejection_status=True),
+        #     'menu':'Accounts',
+        # }
+        return HttpResponse("succces")
+    return redirect('loginpage')

@@ -7,7 +7,7 @@ from category.models import Category
 from django.urls import reverse
 from django.db import models
 from django.forms import SlugField
-
+from accounts.models import Account
 
 # Create your models here.
 class Product(models.Model):
@@ -21,6 +21,7 @@ class Product(models.Model):
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     created_date=models.DateField(auto_now_add=True)
     modified_date=models.DateTimeField(auto_now=True)
+    vendor = models.ForeignKey(Account,on_delete=models.CASCADE)
 
 
 

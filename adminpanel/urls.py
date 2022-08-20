@@ -37,8 +37,10 @@ urlpatterns = [
     path('order_completed/<int:order_id>',views.order_completed,name="order_completed"),
     path('order_cancelled/<int:order_id>',views.order_cancelled,name="order_cancelled"),
 
-    path('admin_search',views.admin_search,name="admin_search")
+    path('admin_search',views.admin_search,name="admin_search"),
 
+    path('admin_ven_approve/<int:id>/',views.vendor_approve,name='vendor_approve'),
+    path('admin_vendor_requests/',views.vendor_requests,name='vendor_requests'),
 
 
 
