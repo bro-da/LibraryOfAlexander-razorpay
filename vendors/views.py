@@ -17,7 +17,7 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 
-from wishlist.models import Wishlist
+from wishlist.models import Wishlist,WishlistItem
 
 
 # Create your views here.
@@ -87,22 +87,22 @@ def vendor_dashboard(request):
 
         payment = tax + profit
 
-        # products_in_wishlist = Wishlist.objects.filter(product__vendor = request.user).count()
+        products_in_wishlist = WishlistItem.objects.filter(product__vendor = request.user).count()
 
-        variation_count = OrderProduct.objects.all().filter(product__vendor=request.user).aggregate(
-            # ebook = Count('variations',filter=Q( v = variations['ebook']))
-        )
+        # variation_count = OrderProduct.objects.all().filter(Product__vendor=request.user).aggregate(
+        #     # ebook = Count('variations',filter=Q( v = variations['ebook']))
+        # )
 
         chart_year = datetime.date.today().year
         chart_month = datetime.date.today().month
 
-        # daily_revenue = OrderProduct.objects.filter(created_at__year=chart_year,created_at__month=chart_month,product__vendor=request.user).order_by('created_at').annotate(day=TruncMinute('created_at')).values('day').annotate(sum=Sum('order_product_total')).values('day','sum')
+        daily_revenue = OrderProduct.objects.filter(created_at__year=chart_year,created_at__month=chart_month,product__vendor=request.user).order_by('created_at').annotate(day=TruncMinute('created_at')).values('day').annotate(sum=Sum('order_product_total')).values('day','sum')
 
-        # day=[]
-        # revenue=[]
-        # for i in daily_revenue:
-        #     day.append(i['day'].minute)
-        #     revenue.append(int(i['sum']))
+        day=[]
+        revenue=[]
+        for i in daily_revenue:
+            day.append(i['day'].minute)
+            revenue.append(int(i['sum']))
 
         context = {
             'menu':'dashboard',
@@ -113,9 +113,9 @@ def vendor_dashboard(request):
             'total_orders':int(total_orders),
             'vendor_commission':int(vendor_commission),
             'sold_products':sold_products,
-            # 'products_in_wishlist':products_in_wishlist,
-            # 'day':day,
-            # 'revenue':revenue,
+            'products_in_wishlist':products_in_wishlist,
+            'day':day,
+             'revenue':revenue,
             }
 
         return render(request,'vendors/dashboard.html',context)
@@ -191,15 +191,15 @@ def add_product(request):
         if form.is_valid():
             product_name = form.cleaned_data['product_name']
             category = form.cleaned_data['category']
-            sub_category = form.cleaned_data['sub_category']
+            
             description = form.cleaned_data['description']
             price = form.cleaned_data['price']
             stock = form.cleaned_data['stock']
             is_available = form.cleaned_data['is_available']
-            author = form.cleaned_data['author']
+            
             vendor = request.user
             slug = slugify(product_name)
-            primary_image = form.cleaned_data['primary_image']
+            
 
             product = Product.objects.create(
                 vendor = vendor,
@@ -210,17 +210,11 @@ def add_product(request):
                 price=price,
                 stock=stock,
                 is_available=is_available,
-                author=author,
-                sub_category=sub_category,
-                primary_image=primary_image
+                
                 )
             
-            images = request.FILES.getlist('images')
-            for image in images:
-                Images.objects.create(
-                    image=image,
-                    product=product
-                )
+            
+            
             return redirect('vendor_products',id=request.user.id)
     else:
         form = AddProductForm()

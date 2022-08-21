@@ -15,6 +15,7 @@ class Product(models.Model):
     slug        =models.SlugField(max_length=200,unique=True)
     description =models.TextField(max_length=500,blank=True) 
     price       =models.IntegerField()
+    author = models.CharField(max_length=250,null=True,blank=True)
     images      =models.ImageField(upload_to='photos/products')    
     stock       =models.IntegerField()
     is_available=models.BooleanField(default=True)
@@ -22,7 +23,7 @@ class Product(models.Model):
     created_date=models.DateField(auto_now_add=True)
     modified_date=models.DateTimeField(auto_now=True)
     vendor = models.ForeignKey(Account,on_delete=models.CASCADE)
-
+    
 
 
     def __str__(self):

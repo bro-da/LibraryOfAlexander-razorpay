@@ -67,6 +67,7 @@ class OrderProduct(models.Model):
     ordered = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    order_product_total = models.FloatField(null=True,blank=True)
 
     def __str__(self):
         return self.product.product_name
