@@ -59,8 +59,11 @@ class Account(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=False)
     is_superadmin = models.BooleanField(default=False)
-    vendor_req_status = models.BooleanField(default=True)
+    vendor_req_status = models.BooleanField(default=False)
     vendor_store = models.CharField(max_length=250,null=True,blank=True)
+    vendor_req_rejection_status = models.BooleanField(default=False)
+    is_banned = models.BooleanField(default=False)
+    is_mail_manager = models.BooleanField(default=False)
 
     
     USERNAME_FIELD='email'

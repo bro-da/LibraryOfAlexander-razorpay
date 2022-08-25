@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'wishlist',
     'category',
     'vendors',
+    'social_django',
+    'admin_panel'
 ]
 
 MIDDLEWARE = [
@@ -89,14 +91,15 @@ AUTH_USER_MODEL='accounts.Account'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'myproject1',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'myproject',
         'USER': 'myprojectuser',
         'PASSWORD': 'password',
         'HOST': 'localhost',
         'PORT': '',
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -149,3 +152,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 razor_pay_key_id='rzp_live_bATDZlQv8Gbo1d'
 secret_key='WLltAgzkBxOhL0ttOsmVWpRP'
+
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.linkedin.LinkedinOAuth2',
+    'social_core.backends.instagram.InstagramOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
+
+SOCIAL_AUTH_FACEBOOK_KEY = '650140189566212'        # App ID
+SOCIAL_AUTH_FACEBOOK_SECRET = 'b4904fd67cae35387c59740004359906'  # App Secret
+
+
+LOGIN_URL = 'loginpage'
+LOGIN_REDIRECT_URL = 'cart'
+LOGOUT_URL = 'logoutUser'
+LOGOUT_REDIRECT_URL = 'loginpage'

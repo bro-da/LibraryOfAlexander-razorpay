@@ -9,4 +9,5 @@ urlpatterns = [
     path('userdash',views.userdash,name='userdash'),
     path('editprofile',views.editprofile,name='editprofile'),
     path('order_detail',views.order_detail,name='order_detail'),
+    path('social-auth/', include('social_django.urls', namespace="social")),
 ]

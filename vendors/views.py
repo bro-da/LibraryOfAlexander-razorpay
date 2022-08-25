@@ -33,20 +33,20 @@ def vendor_reg(request):
                 request.user.vendor_store = request.POST['store_name']
                 request.user.vendor_req_status = True
 
-                user = request.user
-                admin = Account.objects.get(is_mail_manager=True)
-                email = admin.email
-                #USER ACTIVATION
-                current_site = get_current_site(request)
-                mail_subject = 'please activate your account'
-                message = render_to_string('accounts/vendor_account_activation_email.html',{
-                    'user':user,
-                    'admin':admin,
-                    'domain':current_site,
-                })  
-                to_email = email
-                send_email = EmailMessage(mail_subject,message,to=[to_email])
-                send_email.send()
+                # user = request.user
+                # admin = Account.objects.get(is_mail_manager=True)
+                # email = admin.email
+                # #USER ACTIVATION
+                # current_site = get_current_site(request)
+                # mail_subject = 'please activate your account'
+                # message = render_to_string('accounts/vendor_account_activation_email.html',{
+                #     'user':user,
+                #     'admin':admin,
+                #     'domain':current_site,
+                # })  
+                # to_email = email
+                # send_email = EmailMessage(mail_subject,message,to=[to_email])
+                # send_email.send()
                 
                 request.user.save()
                 messages.error(request,"You have successfully submitted the appication !. Please wait till admin's approval.")
@@ -56,7 +56,7 @@ def vendor_reg(request):
         } 
         return render(request,'vendors/vendor_registration.html',context)
     else:
-        return redirect('login')
+        return redirect('loginpage')
 
 def vendor_dashboard(request):
     net_sales=0
@@ -157,14 +157,7 @@ def category_list(request):
         return render(request,'vendors/categories.html',context)
     return redirect('vendor_registration')
 
-def sub_category_list(request):
-    if request.user.is_staff:
-        context = {
-            'subcategories':Sub_category.objects.all(),
-            'menu': 'categories'
-        }
-        return render(request,'vendors/sub_categories.html',context)
-    return redirect('vendor_registration')
+
 
 
 def product_list(request,id):
